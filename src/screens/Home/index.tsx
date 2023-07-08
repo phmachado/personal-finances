@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
+import Card from "../../common/components/Card";
 import theme from "../../common/theme";
 
 export default function Home() {
@@ -32,9 +33,24 @@ export default function Home() {
               paddingHorizontal: 25,
             }}
           >
-            <View style={styles.card}></View>
-            <View style={styles.card}></View>
-            <View style={styles.card}></View>
+            <Card
+              label={"Entradas"}
+              operation={"in"}
+              value={17400}
+              date={new Date().toISOString()}
+            />
+            <Card
+              label={"Saídas"}
+              operation={"out"}
+              value={1259}
+              date={new Date().toISOString()}
+            />
+            <Card
+              label={"Total"}
+              operation={"total"}
+              value={16141}
+              date={new Date().toISOString()}
+            />
           </ScrollView>
         </View>
       </View>
@@ -67,11 +83,5 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     marginTop: "40%",
-  },
-  card: {
-    width: 300,
-    height: 200,
-    backgroundColor: "grey",
-    marginRight: 16,
   },
 });
