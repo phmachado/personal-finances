@@ -37,19 +37,19 @@ export default function Home() {
               label={"Entradas"}
               operation={"in"}
               value={17400}
-              date={new Date().toISOString()}
+              date={"Última entrada dia 13 de abril"}
             />
             <Card
               label={"Saídas"}
               operation={"out"}
               value={1259}
-              date={new Date().toISOString()}
+              date={"Última saída dia 03 de abril"}
             />
             <Card
               label={"Total"}
               operation={"total"}
               value={16141}
-              date={new Date().toISOString()}
+              date={"01 à 16 de abril"}
             />
           </ScrollView>
         </View>

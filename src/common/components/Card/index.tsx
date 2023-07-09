@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import currencyFormatter from "currency-formatter";
 
 import In from "../../../assets/svgs/in.svg";
 import Out from "../../../assets/svgs/out.svg";
@@ -34,7 +35,7 @@ export default function Card({ label, operation, value, date }: CardProps) {
       </View>
       <View style={styles.content}>
         <TextField
-          text={String(value)}
+          text={currencyFormatter.format(value, { locale: "pt-BR" })}
           fontSize={30}
           color={theme.colors.title}
         />
