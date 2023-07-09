@@ -83,7 +83,7 @@ export default function Home() {
             }}
           >
             <View></View>
-            <TextField text="4 itens" />
+            <TextField text={String(transactions.length) + " itens"} />
           </View>
           <FlatList
             data={transactions}
