@@ -18,6 +18,8 @@ import TextField from "../../common/components/TextField";
 import TransactionCard from "../../common/components/TransactionCard";
 import theme from "../../common/theme";
 
+import AddTransaction from "./components/AddTransaction";
+
 export default function Home() {
   const insets = useSafeAreaInsets();
 
@@ -88,7 +90,9 @@ export default function Home() {
           />
         </SafeAreaView>
 
-        <CustomModal show={show} setShow={setShow} />
+        <CustomModal show={show} setShow={setShow}>
+          <AddTransaction />
+        </CustomModal>
       </View>
     </SafeAreaProvider>
   );
