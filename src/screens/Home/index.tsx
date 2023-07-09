@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
 import Logo from "../../assets/svgs/logo.svg";
+import Button from "../../common/components/Button";
 import OverviewCard from "../../common/components/OverviewCard";
 import theme from "../../common/theme";
 
@@ -23,7 +24,7 @@ export default function Home() {
         <View style={styles.header}>
           <View style={styles.headerItemsContainer}>
             <Logo height={32} width={32} />
-            <View style={styles.headerItem}></View>
+            <Button label="Nova transação" />
           </View>
         </View>
         <View style={styles.cardContainer}>
