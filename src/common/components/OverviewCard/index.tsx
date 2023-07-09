@@ -15,7 +15,12 @@ interface CardProps {
   date: string;
 }
 
-export default function Card({ label, operation, value, date }: CardProps) {
+export default function OverviewCard({
+  label,
+  operation,
+  value,
+  date,
+}: CardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.header}>

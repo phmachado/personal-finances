@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
-import Card from "../../common/components/Card";
+import OverviewCard from "../../common/components/OverviewCard";
 import theme from "../../common/theme";
 
 export default function Home() {
@@ -33,19 +33,19 @@ export default function Home() {
               paddingHorizontal: 25,
             }}
           >
-            <Card
+            <OverviewCard
               label={"Entradas"}
               operation={"in"}
               value={17400}
               date={"Última entrada dia 13 de abril"}
             />
-            <Card
+            <OverviewCard
               label={"Saídas"}
               operation={"out"}
               value={1259}
               date={"Última saída dia 03 de abril"}
             />
-            <Card
+            <OverviewCard
               label={"Total"}
               operation={"total"}
               value={16141}
