@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
+import Logo from "../../assets/svgs/logo.svg";
 import OverviewCard from "../../common/components/OverviewCard";
 import theme from "../../common/theme";
 
@@ -21,7 +22,7 @@ export default function Home() {
         <StatusBar style="auto" backgroundColor={theme.colors.green} />
         <View style={styles.header}>
           <View style={styles.headerItemsContainer}>
-            <View style={styles.headerItem}></View>
+            <Logo height={32} width={32} />
             <View style={styles.headerItem}></View>
           </View>
         </View>
