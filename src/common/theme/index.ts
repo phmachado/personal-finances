@@ -8,6 +8,8 @@ const theme = {
     title: "#363F5F",
     text: "#969CB2",
     background: "#F0F2F5",
+    grey: "#D7D7D7",
+    lightGrey: "#E7E9EE",
   },
   fonts: {
     regular: "PoppinsRegular",
