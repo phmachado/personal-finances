@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -16,12 +16,14 @@ import CustomModal from "../../common/components/CustomModal";
 import OverviewCard from "../../common/components/OverviewCard";
 import TextField from "../../common/components/TextField";
 import TransactionCard from "../../common/components/TransactionCard";
+import { GlobalContext } from "../../common/context/GlobalContext";
 import theme from "../../common/theme";
 
 import AddTransaction from "./components/AddTransaction";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
+  const { transactions } = useContext(GlobalContext);
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -84,9 +86,10 @@ export default function Home() {
             <TextField text="4 itens" />
           </View>
           <FlatList
-            data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
-            renderItem={() => <TransactionCard />}
+            data={transactions}
+            renderItem={item => <TransactionCard item={item.item} />}
             showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.id}
           />
         </SafeAreaView>
 

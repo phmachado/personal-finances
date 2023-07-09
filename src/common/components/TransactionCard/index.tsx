@@ -1,21 +1,43 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import currencyFormatter from "currency-formatter";
+import { format } from "date-fns";
 
 import theme from "../../theme";
 import TextField from "../TextField";
 
-export default function TransactionCard() {
+interface TransactionCardProps {
+  item: {
+    name: string;
+    value: number;
+    operation: string;
+    category: string;
+    date: Date;
+    id: string;
+  };
+}
+
+export default function TransactionCard({ item }: TransactionCardProps) {
   return (
     <View style={styles.card}>
-      <TextField text="Desenvolvimento de site" color={theme.colors.title} />
+      <TextField text={item.name} color={theme.colors.title} />
       <TextField
-        text="R$ 12.000,00"
-        color={theme.colors.darkGreen}
+        text={
+          item.operation === "in"
+            ? currencyFormatter.format(item.value, { locale: "pt-BR" })
+            : "- " + currencyFormatter.format(item.value, { locale: "pt-BR" })
+        }
+        color={
+          item.operation === "in" ? theme.colors.darkGreen : theme.colors.red
+        }
         fontSize={20}
       />
       <View style={styles.cardInfo}>
-        <TextField text="Vendas" color={theme.colors.text} />
-        <TextField text="13/04/21" color={theme.colors.text} />
+        <TextField text={item.category} color={theme.colors.text} />
+        <TextField
+          text={format(item.date, "dd/mm/yyyy")}
+          color={theme.colors.text}
+        />
       </View>
     </View>
   );
