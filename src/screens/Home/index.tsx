@@ -1,15 +1,19 @@
-import React, { ScrollView, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
 import Logo from "../../assets/svgs/logo.svg";
 import Button from "../../common/components/Button";
+import CustomModal from "../../common/components/CustomModal";
 import OverviewCard from "../../common/components/OverviewCard";
 import theme from "../../common/theme";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
+
+  const [show, setShow] = useState<boolean>(false);
 
   return (
     <SafeAreaProvider>
@@ -24,7 +28,7 @@ export default function Home() {
         <View style={styles.header}>
           <View style={styles.headerItemsContainer}>
             <Logo height={32} width={32} />
-            <Button label="Nova transação" />
+            <Button label="Nova transação" onPress={() => setShow(true)} />
           </View>
         </View>
         <View style={styles.cardContainer}>
@@ -55,6 +59,7 @@ export default function Home() {
             />
           </ScrollView>
         </View>
+        <CustomModal show={show} setShow={setShow} />
       </View>
     </SafeAreaProvider>
   );
