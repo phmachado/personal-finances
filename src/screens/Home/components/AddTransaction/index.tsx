@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import In from "../../../../assets/svgs/in.svg";
 import Out from "../../../../assets/svgs/out.svg";
 import Button from "../../../../common/components/Button";
 import Input from "../../../../common/components/Input";
+import { GlobalContext } from "../../../../common/context/GlobalContext";
 import theme from "../../../../common/theme";
 
-export default function AddTransaction() {
+interface AddTransactionProps {
+  setShow: (show: boolean) => void;
+}
+
+export default function AddTransaction({ setShow }: AddTransactionProps) {
+  const { createTransaction, getTransactions, setTransactions } =
+    useContext(GlobalContext);
+
+  const [name, setName] = useState<string>("");
+  const [value, setValue] = useState<string>("");
+  const [operation, setOperation] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+
+  function createTransactionHandler() {
+    createTransaction &&
+      createTransaction({ name, value, operation, category, date: new Date() })
+        .then(res => {
+          if (res?.data) {
+            getTransactions &&
+              getTransactions()
+                .then(res => {
+                  if (res?.data) {
+                    setTransactions && setTransactions(res?.data);
+                    setShow(false);
+                  }
+                })
+                .catch(err => console.log("Error", err));
+          }
+        })
+        .catch(err => console.log("Error", err));
+  }
+
   return (
     <View style={styles.container}>
-      <Input placeholder="Name" custonTextInputStyle={{ marginBottom: 8 }} />
-      <Input placeholder="Preço" custonTextInputStyle={{ marginBottom: 8 }} />
+      <Input
+        placeholder="Name"
+        custonTextInputStyle={{ marginBottom: 8 }}
+        value={name}
+        onChangeText={value => setName(value)}
+      />
+      <Input
+        placeholder="Preço"
+        custonTextInputStyle={{ marginBottom: 8 }}
+        value={value}
+        onChangeText={value => setValue(value)}
+        isNumber
+      />
       <View style={styles.buttonsContainer}>
         <Button
           label="Income"
@@ -23,9 +66,11 @@ export default function AddTransaction() {
           fontSize={14}
           customPressableStyle={{
             borderWidth: 1,
-            borderColor: theme.colors.grey,
+            borderColor:
+              operation === "in" ? theme.colors.text : theme.colors.grey,
           }}
           Icon={<In width={24} height={24} />}
+          onPress={() => setOperation("in")}
         />
         <Button
           label="Outcome"
@@ -37,12 +82,18 @@ export default function AddTransaction() {
           fontSize={14}
           customPressableStyle={{
             borderWidth: 1,
-            borderColor: theme.colors.grey,
+            borderColor:
+              operation === "out" ? theme.colors.text : theme.colors.grey,
           }}
           Icon={<Out width={24} height={24} />}
+          onPress={() => setOperation("out")}
         />
       </View>
-      <Input placeholder="Categoria" />
+      <Input
+        placeholder="Categoria"
+        value={category}
+        onChangeText={value => setCategory(value)}
+      />
       <Button
         width={"100%"}
         height={56}
@@ -51,6 +102,7 @@ export default function AddTransaction() {
         fontSize={14}
         fontFamily={theme.fonts.medium}
         customPressableStyle={{ marginTop: 20 }}
+        onPress={() => createTransactionHandler()}
       />
     </View>
   );

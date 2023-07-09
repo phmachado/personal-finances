@@ -11,7 +11,7 @@ import TextField from "../TextField";
 interface CardProps {
   label: string;
   operation: string;
-  value: number;
+  value: string;
   date: string;
 }
 
@@ -40,7 +40,7 @@ export default function OverviewCard({
       </View>
       <View style={styles.content}>
         <TextField
-          text={currencyFormatter.format(value, { locale: "pt-BR" })}
+          text={currencyFormatter.format(Number(value), { locale: "pt-BR" })}
           fontSize={30}
           color={theme.colors.title}
         />

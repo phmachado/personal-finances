@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { AxiosResponse } from "axios";
 
 import api from "../services/api";
 
@@ -16,16 +17,20 @@ interface GlobalContextProviderProps {
 
 interface Transctions {
   name: string;
-  value: number;
+  value: string;
   operation: string;
   category: string;
   date: Date;
-  id: string;
+  id?: string;
 }
 
 interface GlobalContext {
   transactions: Transctions[] | [];
   setTransactions?: Dispatch<SetStateAction<Transctions[]>>;
+  createTransaction?: (
+    data: Transctions
+  ) => Promise<AxiosResponse<Transctions[]>>;
+  getTransactions?: () => Promise<AxiosResponse<Transctions[]>>;
 }
 
 const initialValue = { transactions: [] };
@@ -41,6 +46,10 @@ export function GlobalContextProvider({
     return await api.get<Transctions[]>("transactions");
   }
 
+  async function createTransaction(data: Transctions) {
+    return await api.post<Transctions[]>("transactions", data);
+  }
+
   useEffect(() => {
     getTransactions()
       .then(res => {
@@ -52,8 +61,13 @@ export function GlobalContextProvider({
   }, []);
 
   const value = useMemo(
-    () => ({ transactions, setTransactions }),
-    [transactions, setTransactions]
+    () => ({
+      transactions,
+      setTransactions,
+      createTransaction,
+      getTransactions,
+    }),
+    [transactions, setTransactions, createTransaction, getTransactions]
   );
 
   return (

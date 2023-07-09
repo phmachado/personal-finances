@@ -94,7 +94,7 @@ export default function Home() {
         </SafeAreaView>
 
         <CustomModal show={show} setShow={setShow}>
-          <AddTransaction />
+          <AddTransaction setShow={setShow} />
         </CustomModal>
       </View>
     </SafeAreaProvider>

@@ -9,7 +9,7 @@ import TextField from "../TextField";
 interface TransactionCardProps {
   item: {
     name: string;
-    value: number;
+    value: string;
     operation: string;
     category: string;
     date: Date;
@@ -24,8 +24,9 @@ export default function TransactionCard({ item }: TransactionCardProps) {
       <TextField
         text={
           item.operation === "in"
-            ? currencyFormatter.format(item.value, { locale: "pt-BR" })
-            : "- " + currencyFormatter.format(item.value, { locale: "pt-BR" })
+            ? currencyFormatter.format(Number(item.value), { locale: "pt-BR" })
+            : "- " +
+              currencyFormatter.format(Number(item.value), { locale: "pt-BR" })
         }
         color={
           item.operation === "in" ? theme.colors.darkGreen : theme.colors.red
@@ -35,7 +36,7 @@ export default function TransactionCard({ item }: TransactionCardProps) {
       <View style={styles.cardInfo}>
         <TextField text={item.category} color={theme.colors.text} />
         <TextField
-          text={format(item.date, "dd/mm/yyyy")}
+          text={format(new Date(item.date), "dd/MM/yyyy")}
           color={theme.colors.text}
         />
       </View>

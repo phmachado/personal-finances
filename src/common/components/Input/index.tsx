@@ -5,8 +5,9 @@ import theme from "../../theme";
 
 interface InputProps {
   value?: string;
-  onChangeText?: () => void;
+  onChangeText?: (value: string) => void;
   placeholder?: string;
+  isNumber?: boolean;
   custonTextInputStyle?: object;
 }
 
@@ -14,6 +15,7 @@ export default function Input({
   value,
   onChangeText,
   placeholder,
+  isNumber = false,
   custonTextInputStyle = {},
 }: InputProps) {
   return (
@@ -23,6 +25,7 @@ export default function Input({
       style={styles(custonTextInputStyle).input}
       placeholder={placeholder}
       placeholderTextColor={theme.colors.text}
+      keyboardType={isNumber ? "numeric" : "default"}
     />
   );
 }
