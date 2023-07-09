@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -8,6 +14,8 @@ import Logo from "../../assets/svgs/logo.svg";
 import Button from "../../common/components/Button";
 import CustomModal from "../../common/components/CustomModal";
 import OverviewCard from "../../common/components/OverviewCard";
+import TextField from "../../common/components/TextField";
+import TransactionCard from "../../common/components/TransactionCard";
 import theme from "../../common/theme";
 
 export default function Home() {
@@ -59,6 +67,27 @@ export default function Home() {
             />
           </ScrollView>
         </View>
+        <SafeAreaView
+          style={{ flex: 1, marginTop: "40%", paddingHorizontal: 25 }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+            }}
+          >
+            <View></View>
+            <TextField text="4 itens" />
+          </View>
+          <FlatList
+            data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
+            renderItem={() => <TransactionCard />}
+            showsVerticalScrollIndicator={false}
+          />
+        </SafeAreaView>
+
         <CustomModal show={show} setShow={setShow} />
       </View>
     </SafeAreaProvider>
