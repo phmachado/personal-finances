@@ -1,6 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
+import In from "../../../assets/svgs/in.svg";
+import Out from "../../../assets/svgs/out.svg";
+import Total from "../../../assets/svgs/total.svg";
 import theme from "../../theme";
 import TextField from "../TextField";
 
@@ -19,11 +22,11 @@ export default function Card({ label, operation, value, date }: CardProps) {
         {(() => {
           switch (operation) {
             case "in":
-              return <TextField text={"X"} fontSize={30} />;
+              return <In height={40} width={40} />;
             case "out":
-              return <TextField text={"X"} />;
+              return <Out height={40} width={40} />;
             case "total":
-              return <TextField text={"X"} />;
+              return <Total height={40} width={40} />;
             default:
               return null;
           }
@@ -43,6 +46,7 @@ export default function Card({ label, operation, value, date }: CardProps) {
 
 const styles = StyleSheet.create({
   card: {
+    borderRadius: 5,
     width: 300,
     height: 200,
     backgroundColor: theme.colors.light,
