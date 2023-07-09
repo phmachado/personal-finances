@@ -11,9 +11,9 @@ interface ButtonProps {
   fontFamily?: string;
   fontSize?: number;
   fontColor?: string;
-  width?: number;
+  width?: number | string;
   height?: number;
-  Icon?: ReactNode | null;
+  Icon?: ReactNode;
   loading?: boolean;
   customPressableStyle?: object;
 }
@@ -42,6 +42,7 @@ export default function Button({
           fontColor,
           width,
           height,
+          Icon,
           customPressableStyle
         ).button
       }
@@ -60,6 +61,7 @@ export default function Button({
                   fontColor,
                   width,
                   height,
+                  Icon,
                   customPressableStyle
                 ).buttonIcon
               }
@@ -74,6 +76,7 @@ export default function Button({
                     fontColor,
                     width,
                     height,
+                    Icon,
                     customPressableStyle
                   ).buttonText
                 }
@@ -91,6 +94,7 @@ export default function Button({
                   fontColor,
                   width,
                   height,
+                  Icon,
                   customPressableStyle
                 ).buttonText
               }
@@ -109,8 +113,9 @@ const styles = (
   fontFamily: string,
   fontSize: number,
   fontColor: string,
-  width: number,
+  width: number | string,
   height: number,
+  Icon: ReactNode,
   customPressableStyle: object
 ) =>
   StyleSheet.create({
@@ -132,5 +137,6 @@ const styles = (
       fontFamily,
       fontSize,
       color: fontColor,
+      marginLeft: Icon ? 10 : 0,
     },
   });
