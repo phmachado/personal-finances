@@ -52,7 +52,7 @@ export default function OverviewCard({
               text={String(
                 format(
                   date.firstDate ? new Date(date.firstDate) : new Date(),
-                  "d 'de' MMMM",
+                  "dd 'de' MMMM",
                   {
                     locale: ptBR,
                   }
@@ -60,7 +60,7 @@ export default function OverviewCard({
                   " à " +
                   format(
                     date.latestDate ? new Date(date.latestDate) : new Date(),
-                    "d 'de' MMMM",
+                    "dd 'de' MMMM",
                     {
                       locale: ptBR,
                     }
@@ -75,7 +75,7 @@ export default function OverviewCard({
               <TextField
                 text={String(
                   ` Última ${operation === "in" ? "entrada" : "saída"} dia ` +
-                    format(date ? new Date(date) : new Date(), "d 'de' MMMM", {
+                    format(date ? new Date(date) : new Date(), "dd 'de' MMMM", {
                       locale: ptBR,
                     })
                 )}
