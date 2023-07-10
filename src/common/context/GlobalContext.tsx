@@ -36,6 +36,9 @@ interface GlobalContext {
   totalBalance?: () => string;
   loading?: boolean;
   setLoading?: (loading: boolean) => void;
+  getLatestIncomeDate?: () => 0 | Date;
+  getLatestOutcomeDate?: () => 0 | Date;
+  getTransactionPeriod?: () => { latestDate: 0 | Date; firstDate: 0 | Date };
 }
 
 const initialValue = { transactions: [] };
@@ -76,6 +79,43 @@ export function GlobalContextProvider({
     );
   }
 
+  function getLatestIncomeDate() {
+    return (
+      transactions.length &&
+      transactions.filter(el => el.operation === "in").length &&
+      transactions
+        .filter(el => el.operation === "in")
+        .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))[0]
+        .date
+    );
+  }
+
+  function getLatestOutcomeDate() {
+    return (
+      transactions.length &&
+      transactions.filter(el => el.operation === "out").length &&
+      transactions
+        .filter(el => el.operation === "out")
+        .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))[0]
+        .date
+    );
+  }
+
+  function getTransactionPeriod() {
+    return {
+      latestDate:
+        transactions.length &&
+        transactions.sort(
+          (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+        )[0].date,
+      firstDate:
+        transactions.length &&
+        transactions.sort(
+          (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+        )[transactions.length - 1].date,
+    };
+  }
+
   function totalBalance() {
     return String(Number(totalIncome()) - Number(totalOutcome()));
   }
@@ -107,6 +147,9 @@ export function GlobalContextProvider({
       totalBalance,
       loading,
       setLoading,
+      getLatestIncomeDate,
+      getLatestOutcomeDate,
+      getTransactionPeriod,
     }),
     [
       transactions,
@@ -118,6 +161,9 @@ export function GlobalContextProvider({
       totalBalance,
       loading,
       setLoading,
+      getLatestIncomeDate,
+      getLatestOutcomeDate,
+      getTransactionPeriod,
     ]
   );
 

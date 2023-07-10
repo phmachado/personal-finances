@@ -24,8 +24,16 @@ import AddTransaction from "./components/AddTransaction";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
-  const { transactions, totalIncome, totalOutcome, totalBalance, loading } =
-    useContext(GlobalContext);
+  const {
+    transactions,
+    totalIncome,
+    totalOutcome,
+    totalBalance,
+    loading,
+    getLatestIncomeDate,
+    getLatestOutcomeDate,
+    getTransactionPeriod,
+  } = useContext(GlobalContext);
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -67,19 +75,19 @@ export default function Home() {
               label={"Entradas"}
               operation={"in"}
               value={totalIncome && totalIncome()}
-              date={"Última entrada dia 13 de abril"}
+              date={getLatestIncomeDate && getLatestIncomeDate()}
             />
             <OverviewCard
               label={"Saídas"}
               operation={"out"}
               value={totalOutcome && totalOutcome()}
-              date={"Última saída dia 03 de abril"}
+              date={getLatestOutcomeDate && getLatestOutcomeDate()}
             />
             <OverviewCard
               label={"Total"}
               operation={"total"}
               value={totalBalance && totalBalance()}
-              date={"01 à 16 de abril"}
+              date={getTransactionPeriod && getTransactionPeriod()}
             />
           </ScrollView>
         </View>

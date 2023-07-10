@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import currencyFormatter from "currency-formatter";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 import In from "../../../assets/svgs/in.svg";
 import Out from "../../../assets/svgs/out.svg";
@@ -12,7 +14,7 @@ interface CardProps {
   label: string;
   operation: string;
   value: string | undefined;
-  date: string;
+  date: 0 | Date | { latestDate: 0 | Date; firstDate: 0 | Date } | undefined;
 }
 
 export default function OverviewCard({
@@ -44,7 +46,44 @@ export default function OverviewCard({
           fontSize={30}
           color={theme.colors.title}
         />
-        <TextField text={date} fontSize={12} />
+        {typeof date === "object" ? (
+          <>
+            <TextField
+              text={String(
+                format(
+                  date.firstDate ? new Date(date.firstDate) : new Date(),
+                  "d 'de' MMMM",
+                  {
+                    locale: ptBR,
+                  }
+                ) +
+                  " à " +
+                  format(
+                    date.latestDate ? new Date(date.latestDate) : new Date(),
+                    "d 'de' MMMM",
+                    {
+                      locale: ptBR,
+                    }
+                  )
+              )}
+              fontSize={12}
+            />
+          </>
+        ) : (
+          <>
+            {typeof date !== "number" && (
+              <TextField
+                text={String(
+                  ` Última ${operation === "in" ? "entrada" : "saída"} dia ` +
+                    format(date ? new Date(date) : new Date(), "d 'de' MMMM", {
+                      locale: ptBR,
+                    })
+                )}
+                fontSize={12}
+              />
+            )}
+          </>
+        )}
       </View>
     </View>
   );
