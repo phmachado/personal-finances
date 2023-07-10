@@ -13,7 +13,7 @@ interface TransactionCardProps {
     operation: string;
     category: string;
     date: Date;
-    id: string;
+    id?: string;
   };
 }
 

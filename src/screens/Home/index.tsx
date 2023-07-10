@@ -103,15 +103,14 @@ export default function Home() {
             }}
           >
             <View></View>
-            <TextField text={String(transactions.length) + " itens"} />
+            <TextField text={String(transactions?.length) + " itens"} />
           </View>
           <FlatList
-            data={transactions.sort(
+            data={transactions?.sort(
               (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
             )}
             renderItem={item => <TransactionCard item={item.item} />}
             showsVerticalScrollIndicator={false}
-            keyExtractor={item => item.id}
           />
         </SafeAreaView>
 

@@ -25,7 +25,7 @@ interface Transctions {
 }
 
 interface GlobalContext {
-  transactions: Transctions[] | [];
+  transactions?: Transctions[] | [];
   setTransactions?: Dispatch<SetStateAction<Transctions[]>>;
   createTransaction?: (
     data: Transctions
@@ -41,7 +41,7 @@ interface GlobalContext {
   getTransactionPeriod?: () => { latestDate: 0 | Date; firstDate: 0 | Date };
 }
 
-const initialValue = { transactions: [] };
+const initialValue = {};
 
 export const GlobalContext = createContext<GlobalContext>(initialValue);
 
