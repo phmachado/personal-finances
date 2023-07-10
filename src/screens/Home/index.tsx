@@ -23,7 +23,8 @@ import AddTransaction from "./components/AddTransaction";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
-  const { transactions } = useContext(GlobalContext);
+  const { transactions, totalIncome, totalOutcome, totalBalance } =
+    useContext(GlobalContext);
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -54,19 +55,19 @@ export default function Home() {
             <OverviewCard
               label={"Entradas"}
               operation={"in"}
-              value={17400}
+              value={totalIncome && totalIncome()}
               date={"Última entrada dia 13 de abril"}
             />
             <OverviewCard
               label={"Saídas"}
               operation={"out"}
-              value={1259}
+              value={totalOutcome && totalOutcome()}
               date={"Última saída dia 03 de abril"}
             />
             <OverviewCard
               label={"Total"}
               operation={"total"}
-              value={16141}
+              value={totalBalance && totalBalance()}
               date={"01 à 16 de abril"}
             />
           </ScrollView>
@@ -86,7 +87,9 @@ export default function Home() {
             <TextField text={String(transactions.length) + " itens"} />
           </View>
           <FlatList
-            data={transactions}
+            data={transactions.sort(
+              (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+            )}
             renderItem={item => <TransactionCard item={item.item} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}

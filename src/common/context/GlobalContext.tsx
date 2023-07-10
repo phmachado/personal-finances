@@ -31,6 +31,9 @@ interface GlobalContext {
     data: Transctions
   ) => Promise<AxiosResponse<Transctions[]>>;
   getTransactions?: () => Promise<AxiosResponse<Transctions[]>>;
+  totalIncome?: () => string;
+  totalOutcome?: () => string;
+  totalBalance?: () => string;
 }
 
 const initialValue = { transactions: [] };
@@ -50,6 +53,30 @@ export function GlobalContextProvider({
     return await api.post<Transctions[]>("transactions", data);
   }
 
+  function totalIncome() {
+    return String(
+      transactions
+        .filter(el => el.operation === "in")
+        .reduce((accumulator, object) => {
+          return accumulator + Number(object.value);
+        }, 0)
+    );
+  }
+
+  function totalOutcome() {
+    return String(
+      transactions
+        .filter(el => el.operation === "out")
+        .reduce((accumulator, object) => {
+          return accumulator + Number(object.value);
+        }, 0)
+    );
+  }
+
+  function totalBalance() {
+    return String(Number(totalIncome()) - Number(totalOutcome()));
+  }
+
   useEffect(() => {
     getTransactions()
       .then(res => {
@@ -66,8 +93,19 @@ export function GlobalContextProvider({
       setTransactions,
       createTransaction,
       getTransactions,
+      totalIncome,
+      totalOutcome,
+      totalBalance,
     }),
-    [transactions, setTransactions, createTransaction, getTransactions]
+    [
+      transactions,
+      setTransactions,
+      createTransaction,
+      getTransactions,
+      totalIncome,
+      totalOutcome,
+      totalBalance,
+    ]
   );
 
   return (

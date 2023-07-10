@@ -11,7 +11,7 @@ import TextField from "../TextField";
 interface CardProps {
   label: string;
   operation: string;
-  value: string;
+  value: string | undefined;
   date: string;
 }
 
