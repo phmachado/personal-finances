@@ -91,17 +91,8 @@ export default function Home() {
             />
           </ScrollView>
         </View>
-        <SafeAreaView
-          style={{ flex: 1, marginTop: "40%", paddingHorizontal: 25 }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 10,
-            }}
-          >
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.items}>
             <View></View>
             <TextField text={String(transactions?.length) + " itens"} />
           </View>
@@ -147,5 +138,16 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     marginTop: "40%",
+  },
+  items: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  safeArea: {
+    flex: 1,
+    marginTop: "40%",
+    paddingHorizontal: 25,
   },
 });
