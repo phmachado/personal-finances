@@ -34,6 +34,8 @@ interface GlobalContext {
   totalIncome?: () => string;
   totalOutcome?: () => string;
   totalBalance?: () => string;
+  loading?: boolean;
+  setLoading?: (loading: boolean) => void;
 }
 
 const initialValue = { transactions: [] };
@@ -44,6 +46,7 @@ export function GlobalContextProvider({
   children,
 }: GlobalContextProviderProps) {
   const [transactions, setTransactions] = useState<Transctions[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function getTransactions() {
     return await api.get<Transctions[]>("transactions");
@@ -78,13 +81,19 @@ export function GlobalContextProvider({
   }
 
   useEffect(() => {
+    setLoading(true);
     getTransactions()
       .then(res => {
         if (res?.data) {
           setTransactions(res?.data);
+          setLoading(false);
         }
+        setLoading(false);
       })
-      .catch(err => console.log("Error", err));
+      .catch(err => {
+        console.log("Error", err);
+        setLoading(false);
+      });
   }, []);
 
   const value = useMemo(
@@ -96,6 +105,8 @@ export function GlobalContextProvider({
       totalIncome,
       totalOutcome,
       totalBalance,
+      loading,
+      setLoading,
     }),
     [
       transactions,
@@ -105,6 +116,8 @@ export function GlobalContextProvider({
       totalIncome,
       totalOutcome,
       totalBalance,
+      loading,
+      setLoading,
     ]
   );
 

@@ -20,8 +20,10 @@ export default function AddTransaction({ setShow }: AddTransactionProps) {
   const [value, setValue] = useState<string>("");
   const [operation, setOperation] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   function createTransactionHandler() {
+    setLoading(true);
     createTransaction &&
       createTransaction({ name, value, operation, category, date: new Date() })
         .then(res => {
@@ -31,13 +33,20 @@ export default function AddTransaction({ setShow }: AddTransactionProps) {
                 .then(res => {
                   if (res?.data) {
                     setTransactions && setTransactions(res?.data);
+                    setLoading(false);
                     setShow(false);
                   }
                 })
-                .catch(err => console.log("Error", err));
+                .catch(err => {
+                  console.log("Error", err);
+                  setLoading(false);
+                });
           }
         })
-        .catch(err => console.log("Error", err));
+        .catch(err => {
+          console.log("Error", err);
+          setLoading(false);
+        });
   }
 
   return (
@@ -103,6 +112,7 @@ export default function AddTransaction({ setShow }: AddTransactionProps) {
         fontFamily={theme.fonts.medium}
         customPressableStyle={{ marginTop: 20 }}
         onPress={() => createTransactionHandler()}
+        loading={loading}
       />
     </View>
   );

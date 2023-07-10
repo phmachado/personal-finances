@@ -13,6 +13,7 @@ import { StatusBar } from "expo-status-bar";
 import Logo from "../../assets/svgs/logo.svg";
 import Button from "../../common/components/Button";
 import CustomModal from "../../common/components/CustomModal";
+import Loading from "../../common/components/Loading";
 import OverviewCard from "../../common/components/OverviewCard";
 import TextField from "../../common/components/TextField";
 import TransactionCard from "../../common/components/TransactionCard";
@@ -23,10 +24,20 @@ import AddTransaction from "./components/AddTransaction";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
-  const { transactions, totalIncome, totalOutcome, totalBalance } =
+  const { transactions, totalIncome, totalOutcome, totalBalance, loading } =
     useContext(GlobalContext);
 
   const [show, setShow] = useState<boolean>(false);
+
+  if (loading) {
+    return (
+      <Loading
+        customViewStyles={{ flex: 1 }}
+        color={theme.colors.darkGreen}
+        size="large"
+      />
+    );
+  }
 
   return (
     <SafeAreaProvider>
