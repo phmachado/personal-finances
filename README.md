@@ -32,16 +32,16 @@ yarn start
 ## Bibliotecas
 Libs utilizadas que valem ser mencionadas:
 - axios: utilizada para chamadas à API
-- currency-formatter: utilizada para formatar dinheiro
-- date-fns: utilizada para formatar datas
+- currency-formatter: utilizada para formatação de dinheiro
+- date-fns: utilizada para formatação de datas
 - expo-font: utilizada para incluir fontes externas no app
 - @react-navigation: utilizada para generenciar a navegação entre telas no app
 
 ## API
-Foi utilizada a mockapi.io para geração da API, sendo utilizado as seguintes rotas:
+Com uso da mockapi.io para geração da API, foram criadas as seguintes rotas:
 
 #### GET /transactions
-Que retorna um array de objetos da seguinte forma:
+Retorna um array de objetos com a seguinte forma:
 ```
 {
     id: Object ID,
@@ -53,7 +53,7 @@ Que retorna um array de objetos da seguinte forma:
 }
 ```
 #### POST /transactions
-Que esperar receber no body um objeto da seguinte forma:
+Esperar receber no body da requisição um objeto com a seguinte forma:
 ```
 {
     name: string,
