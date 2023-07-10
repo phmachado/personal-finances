@@ -14,7 +14,8 @@ interface CardProps {
   label: string;
   operation: string;
   value: string | undefined;
-  date: 0 | Date | { latestDate: 0 | Date; firstDate: 0 | Date } | undefined;
+  date?: 0 | Date | undefined;
+  dateRange?: { latestDate: 0 | Date; firstDate: 0 | Date };
 }
 
 export default function OverviewCard({
@@ -22,6 +23,7 @@ export default function OverviewCard({
   operation,
   value,
   date,
+  dateRange,
 }: CardProps) {
   return (
     <View style={styles.card}>
@@ -46,28 +48,23 @@ export default function OverviewCard({
           fontSize={30}
           color={theme.colors.title}
         />
-        {typeof date === "object" ? (
+        {dateRange ? (
           <>
-            <TextField
-              text={String(
-                format(
-                  date.firstDate ? new Date(date.firstDate) : new Date(),
-                  "dd 'de' MMMM",
-                  {
-                    locale: ptBR,
-                  }
-                ) +
-                  " à " +
-                  format(
-                    date.latestDate ? new Date(date.latestDate) : new Date(),
-                    "dd 'de' MMMM",
-                    {
+            {typeof dateRange.firstDate !== "number" &&
+              typeof dateRange.latestDate !== "number" && (
+                <TextField
+                  text={String(
+                    format(new Date(dateRange.firstDate), "dd 'de' MMMM", {
                       locale: ptBR,
-                    }
-                  )
+                    }) +
+                      " à " +
+                      format(new Date(dateRange.latestDate), "dd 'de' MMMM", {
+                        locale: ptBR,
+                      })
+                  )}
+                  fontSize={12}
+                />
               )}
-              fontSize={12}
-            />
           </>
         ) : (
           <>

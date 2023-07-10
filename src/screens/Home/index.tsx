@@ -87,7 +87,7 @@ export default function Home() {
               label={"Total"}
               operation={"total"}
               value={totalBalance && totalBalance()}
-              date={getTransactionPeriod && getTransactionPeriod()}
+              dateRange={getTransactionPeriod && getTransactionPeriod()}
             />
           </ScrollView>
         </View>
