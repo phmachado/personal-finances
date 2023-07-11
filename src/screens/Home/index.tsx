@@ -1,26 +1,18 @@
 import React, { useContext, useState } from "react";
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
-import Logo from "../../assets/svgs/logo.svg";
-import Button from "../../common/components/Button";
 import CustomModal from "../../common/components/CustomModal";
 import Loading from "../../common/components/Loading";
-import OverviewCard from "../../common/components/OverviewCard";
-import TextField from "../../common/components/TextField";
-import TransactionCard from "../../common/components/TransactionCard";
 import { GlobalContext } from "../../common/context/GlobalContext";
 import theme from "../../common/theme";
 
 import AddTransaction from "./components/AddTransaction";
+import Header from "./components/Header";
+import Overview from "./components/Overview";
+import Transactions from "./components/Transactions";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
@@ -36,6 +28,14 @@ export default function Home() {
   } = useContext(GlobalContext);
 
   const [show, setShow] = useState<boolean>(false);
+
+  const checkOverview =
+    totalIncome &&
+    totalOutcome &&
+    totalBalance &&
+    getLatestIncomeDate &&
+    getLatestOutcomeDate &&
+    getTransactionPeriod;
 
   if (loading) {
     return (
@@ -57,54 +57,18 @@ export default function Home() {
         }}
       >
         <StatusBar style="auto" backgroundColor={theme.colors.green} />
-        <View style={styles.header}>
-          <View style={styles.headerItemsContainer}>
-            <Logo height={32} width={32} />
-            <Button label="Nova transação" onPress={() => setShow(true)} />
-          </View>
-        </View>
-        <View style={styles.cardContainer}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingHorizontal: 25,
-            }}
-          >
-            <OverviewCard
-              label={"Entradas"}
-              operation={"in"}
-              value={totalIncome && totalIncome()}
-              date={getLatestIncomeDate && getLatestIncomeDate()}
-            />
-            <OverviewCard
-              label={"Saídas"}
-              operation={"out"}
-              value={totalOutcome && totalOutcome()}
-              date={getLatestOutcomeDate && getLatestOutcomeDate()}
-            />
-            <OverviewCard
-              label={"Total"}
-              operation={"total"}
-              value={totalBalance && totalBalance()}
-              dateRange={getTransactionPeriod && getTransactionPeriod()}
-            />
-          </ScrollView>
-        </View>
-        <SafeAreaView style={styles.safeArea}>
-          <View style={styles.items}>
-            <View></View>
-            <TextField text={String(transactions?.length) + " itens"} />
-          </View>
-          <FlatList
-            data={transactions?.sort(
-              (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
-            )}
-            renderItem={item => <TransactionCard item={item.item} />}
-            showsVerticalScrollIndicator={false}
+        <Header setShow={setShow} />
+        {checkOverview && (
+          <Overview
+            totalIncome={totalIncome}
+            totalOutcome={totalOutcome}
+            totalBalance={totalBalance}
+            getLatestIncomeDate={getLatestIncomeDate}
+            getLatestOutcomeDate={getLatestOutcomeDate}
+            getTransactionPeriod={getTransactionPeriod}
           />
-        </SafeAreaView>
-
+        )}
+        {transactions && <Transactions transactions={transactions} />}
         <CustomModal show={show} setShow={setShow}>
           <AddTransaction setShow={setShow} />
         </CustomModal>
@@ -117,37 +81,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-  },
-  header: {
-    backgroundColor: theme.colors.green,
-    height: 234,
-    width: "100%",
-    paddingHorizontal: 25,
-    paddingTop: "10%",
-  },
-  headerItemsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  headerItem: {
-    backgroundColor: "grey",
-    width: 50,
-    height: 50,
-  },
-  cardContainer: {
-    width: "100%",
-    position: "absolute",
-    marginTop: "40%",
-  },
-  items: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  safeArea: {
-    flex: 1,
-    marginTop: "40%",
-    paddingHorizontal: 25,
   },
 });
