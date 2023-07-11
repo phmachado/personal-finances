@@ -15,7 +15,7 @@ interface GlobalContextProviderProps {
   children: ReactNode;
 }
 
-interface Transctions {
+export interface Transctions {
   name: string;
   value: string;
   operation: string;
